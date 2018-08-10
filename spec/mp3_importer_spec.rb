@@ -18,7 +18,7 @@ describe "MP3Importer" do
 
       expect(music_importer.files.size).to eq(4)
     end
-
+    # binding.pry
     it 'normalizes the filename to just the mp3 filename with no path' do
       test_music_path = "./spec/fixtures/mp3s"
       music_importer = MP3Importer.new(test_music_path)
