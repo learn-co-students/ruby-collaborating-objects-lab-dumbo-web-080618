@@ -6,7 +6,11 @@ class MP3Importer
   end
 
   def files
-    @file ||= Dir.glob("#{path}/*.mp3").collect{ |f| f.gsub("#{path}/", "") }
+    #a ||= b is a || b = a
+    @file ||= Dir.glob("#{path}/*.mp3").collect do |f|
+      f.gsub("#{path}/", "") #gsub subsited all occurrences of a pattern
+      # for example "hello".gsub(/[aeiou]/, '*') #=> "h*ll*"
+    end
   end
 
   def import
