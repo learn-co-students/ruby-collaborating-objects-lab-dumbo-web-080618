@@ -7,7 +7,7 @@ class MP3Importer
 
   def files
     #a ||= b is a || b = a
-    @file ||= Dir.glob("#{path}/*.mp3").collect do |f|
+    @file = Dir.glob("#{path}/*.mp3").map do |f|
       f.gsub("#{path}/", "") #gsub subsited all occurrences of a pattern
       # for example "hello".gsub(/[aeiou]/, '*') #=> "h*ll*"
     end
