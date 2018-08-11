@@ -53,4 +53,7 @@ describe 'Artist' do
       expect{artist.print_songs}.to output("Dirty Diana\nBillie Jean\n").to_stdout
     end
   end
+
 end
+# binding.pry
+# 0
