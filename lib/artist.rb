@@ -1,59 +1,68 @@
 require 'pry'
-
 class Artist
   attr_accessor :name, :songs
-  @@all  = []
-    def initialize(name)
-      @name = name
-      @songs = []
 
+  @@all = []
 
+  def initialize(name)
+    @name = name
+    save
+    # @songs = []
+  end
 
-    end
+  def add_song(song)
+    # @songs << song
+    song.artist = self
+  end
 
+  def songs 
+    Song.all.select {|song| song.artist == self }
+  end
 
-    # def
+  def save
+    @@all << self 
+  end
 
-    def self.all
-      @@all
-    end
-    #
-    def add_song(songs)
-      @songs << songs
-    end
+  def self.all
+    @@all 
+  end
 
-    def save
-    @@all << self
-    end
-
-    def print_songs
-      @songs.each do |song_name|
-        puts song_name.name
-      end
-    end
-
-    def self.create_by_name(name)
-      abc = self.new(name)
-      abc.name  = name
-      @@all << abc
-      abc
-    end
-
-    def self.find_by_name(name)
-      @@all.find {|songs| songs.name == name}
-    end
-
-
-    def self.find_or_create_by_name(name)
-      if !(self.find_by_name(name))
-          self.create_by_name(name)
-        else
-          self.find_by_name(name)
-        end
-      end
+  def self.find_or_create_by_name(name)
+    ## SOLUTION 1
+    self.find(name) ? self.find(name) : self.create(name)
+    ## SOLUTION 2
+    # find = self.all.find {|artist| name == artist.name }
+    # if find
+    #   find
+    # else 
+    #   self.new(name).tap{|artist| artist.save }
     # end
 
+    ## SOLUTION 3
+    # self.find(name) || self.create(name)
 
-
-
+    ## SOLUTION 4
+    # self.all.find {|artist| name == artist.name } || self.new(name).tap{|artist| artist.save }
   end
+
+  def self.find(name)
+    self.all.find {|artist| name == artist.name }
+  end
+
+  def self.create(name)
+    # Artist.new
+    ## SOLUTION 1
+    # self.new(name).tap{|artist| artist.save } 
+
+    ## SOLUTION 2
+    new_artist = self.new(name)
+    # new_artist.save
+    new_artist
+  end
+
+  def print_songs
+    songs.each {|song| puts song.name}
+  end
+
+
+end
